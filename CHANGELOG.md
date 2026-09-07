@@ -3,6 +3,20 @@
 Bu projedeki tüm önemli değişiklikler bu dosyada listelenir.
 Format [Keep a Changelog](https://keepachangelog.com/) temel alınmıştır; sürümleme [Semantic Versioning](https://semver.org/) kurallarına uyar.
 
+## [1.0.3] - 2026-09-07
+
+### Changed
+- WordPress.org isim/permalink kuralı "woocommerce" kelimesine hiçbir şekilde izin vermediği için, eklenti adından/slug'ından bu kelime tamamen kaldırıldı: `order-checkout-page-agreement`.
+
+## [1.0.2] - 2026-09-07
+
+### Changed
+- WordPress.org incelemesi sonrası eklenti adı/slug'ı `order-checkout-page-agreement-for-woocommerce` olarak değiştirildi (önceki isim çok jenerik bulundu).
+- `readme.txt` Contributors alanı gerçek WordPress.org kullanıcı adıyla (`mehmetalicakmak`) düzeltildi.
+
+### Fixed
+- `wp_footer`'a doğrudan basılan Fatura Tipi göster/gizle `<script>`'i, `wp_enqueue_script` ile yüklenen ayrı bir dosyaya taşındı.
+
 ## [1.0.1] - 2026-09-04
 
 ### Changed

@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Sözleşme Yönetimi
+ * Plugin Name: Order Checkout Page Agreement (Sipariş Ödeme Sayfası Sözleşme Onayı)
  * Plugin URI: https://github.com/mcakmakali/wordpress-woocommerce-sozlesme
  * Description: WooCommerce ödeme sayfasında onaylanması gereken/opsiyonel sözleşmeler eklemenizi sağlar.
- * Version: 1.0.1
+ * Version: 1.0.3
  * Author: Mehmet Ali Çakmak
  * Author URI: https://mehmetalicakmak.me
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: sozlesme-yonetimi-for-woocommerce
+ * Text Domain: order-checkout-page-agreement
  * Requires Plugins: woocommerce
  */
 
@@ -56,7 +56,6 @@ final class Sozlesme_Yonetimi {
 			add_filter( 'woocommerce_checkout_fields', array( $this, 'add_billing_customer_type_fields' ) );
 			add_filter( 'woocommerce_checkout_posted_data', array( $this, 'filter_billing_customer_type_posted_data' ) );
 			add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate_billing_customer_type_fields' ), 10, 2 );
-			add_action( 'wp_footer', array( $this, 'billing_customer_type_toggle_script' ) );
 			add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'display_billing_customer_type_admin_meta' ) );
 			add_action( 'woocommerce_email_order_meta', array( $this, 'display_billing_customer_type_in_emails' ), 10, 4 );
 		}
@@ -260,10 +259,10 @@ final class Sozlesme_Yonetimi {
 	public function add_billing_customer_type_fields( $fields ) {
 		$fields['billing']['billing_customer_type'] = array(
 			'type'     => 'radio',
-			'label'    => __( 'Fatura Tipi', 'sozlesme-yonetimi-for-woocommerce' ),
+			'label'    => __( 'Fatura Tipi', 'order-checkout-page-agreement' ),
 			'options'  => array(
-				'bireysel' => __( 'Bireysel', 'sozlesme-yonetimi-for-woocommerce' ),
-				'kurumsal' => __( 'Kurumsal', 'sozlesme-yonetimi-for-woocommerce' ),
+				'bireysel' => __( 'Bireysel', 'order-checkout-page-agreement' ),
+				'kurumsal' => __( 'Kurumsal', 'order-checkout-page-agreement' ),
 			),
 			'default'  => 'bireysel',
 			'required' => true,
@@ -273,8 +272,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_company'] = array(
-			'label'       => __( 'Şirket Unvanı', 'sozlesme-yonetimi-for-woocommerce' ),
-			'placeholder' => _x( 'Şirket Unvanı', 'placeholder', 'sozlesme-yonetimi-for-woocommerce' ),
+			'label'       => __( 'Şirket Unvanı', 'order-checkout-page-agreement' ),
+			'placeholder' => _x( 'Şirket Unvanı', 'placeholder', 'order-checkout-page-agreement' ),
 			'required'    => true,
 			'class'       => array( 'form-row-wide', 'billing-corporate-field' ),
 			'clear'       => true,
@@ -282,8 +281,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_tax_office'] = array(
-			'label'       => __( 'Vergi Dairesi', 'sozlesme-yonetimi-for-woocommerce' ),
-			'placeholder' => _x( 'Vergi Dairesi', 'placeholder', 'sozlesme-yonetimi-for-woocommerce' ),
+			'label'       => __( 'Vergi Dairesi', 'order-checkout-page-agreement' ),
+			'placeholder' => _x( 'Vergi Dairesi', 'placeholder', 'order-checkout-page-agreement' ),
 			'required'    => true,
 			'class'       => array( 'form-row-first', 'billing-corporate-field' ),
 			'clear'       => false,
@@ -291,8 +290,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_tax_number'] = array(
-			'label'       => __( 'Vergi Numarası', 'sozlesme-yonetimi-for-woocommerce' ),
-			'placeholder' => _x( 'Vergi Numarası', 'placeholder', 'sozlesme-yonetimi-for-woocommerce' ),
+			'label'       => __( 'Vergi Numarası', 'order-checkout-page-agreement' ),
+			'placeholder' => _x( 'Vergi Numarası', 'placeholder', 'order-checkout-page-agreement' ),
 			'required'    => true,
 			'class'       => array( 'form-row-last', 'billing-corporate-field' ),
 			'clear'       => true,
@@ -301,8 +300,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_tc_no'] = array(
-			'label'       => __( 'T.C. Kimlik No', 'sozlesme-yonetimi-for-woocommerce' ),
-			'placeholder' => _x( 'T.C. Kimlik No', 'placeholder', 'sozlesme-yonetimi-for-woocommerce' ),
+			'label'       => __( 'T.C. Kimlik No', 'order-checkout-page-agreement' ),
+			'placeholder' => _x( 'T.C. Kimlik No', 'placeholder', 'order-checkout-page-agreement' ),
 			'required'    => true,
 			'class'       => array( 'form-row-wide', 'billing-individual-field' ),
 			'clear'       => true,
@@ -338,7 +337,7 @@ final class Sozlesme_Yonetimi {
 		$customer_type = isset( $_POST['billing_customer_type'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_customer_type'] ) ) : '';
 
 		if ( $customer_type && ! in_array( $customer_type, array( 'bireysel', 'kurumsal' ), true ) ) {
-			$errors->add( 'validation', __( 'Lütfen fatura tipini (Bireysel/Kurumsal) seçiniz.', 'sozlesme-yonetimi-for-woocommerce' ) );
+			$errors->add( 'validation', __( 'Lütfen fatura tipini (Bireysel/Kurumsal) seçiniz.', 'order-checkout-page-agreement' ) );
 			return;
 		}
 
@@ -346,47 +345,15 @@ final class Sozlesme_Yonetimi {
 			$tc_no = isset( $_POST['billing_tc_no'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_tc_no'] ) ) : '';
 
 			if ( $tc_no && ! preg_match( '/^[1-9][0-9]{10}$/', $tc_no ) ) {
-				$errors->add( 'validation', __( 'T.C. Kimlik Numarası 11 haneli ve rakamlardan oluşmalıdır.', 'sozlesme-yonetimi-for-woocommerce' ) );
+				$errors->add( 'validation', __( 'T.C. Kimlik Numarası 11 haneli ve rakamlardan oluşmalıdır.', 'order-checkout-page-agreement' ) );
 			}
 		} elseif ( 'kurumsal' === $customer_type ) {
 			$tax_number = isset( $_POST['billing_tax_number'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_tax_number'] ) ) : '';
 
 			if ( $tax_number && ! preg_match( '/^[0-9]{10}$/', $tax_number ) ) {
-				$errors->add( 'validation', __( 'Vergi Numarası 10 haneli ve rakamlardan oluşmalıdır.', 'sozlesme-yonetimi-for-woocommerce' ) );
+				$errors->add( 'validation', __( 'Vergi Numarası 10 haneli ve rakamlardan oluşmalıdır.', 'order-checkout-page-agreement' ) );
 			}
 		}
-	}
-
-	/**
-	 * Checkout sayfasında Fatura Tipi seçimine göre alanları göster/gizle.
-	 */
-	public function billing_customer_type_toggle_script() {
-		if ( ! function_exists( 'is_checkout' ) || ! is_checkout() ) {
-			return;
-		}
-		?>
-		<script>
-		jQuery(function($) {
-			function mediacatToggleBillingCustomerTypeFields() {
-				var type = $('input[name="billing_customer_type"]:checked').val();
-				var $corporate = $('.billing-corporate-field');
-				var $individual = $('.billing-individual-field');
-
-				if ('kurumsal' === type) {
-					$corporate.show().addClass('validate-required').find('input').prop('disabled', false);
-					$individual.hide().removeClass('validate-required').find('input').val('').prop('disabled', true);
-				} else {
-					$individual.show().addClass('validate-required').find('input').prop('disabled', false);
-					$corporate.hide().removeClass('validate-required').find('input').val('').prop('disabled', true);
-				}
-			}
-
-			$(document.body).on('change', 'input[name="billing_customer_type"]', mediacatToggleBillingCustomerTypeFields);
-			$(document.body).on('updated_checkout', mediacatToggleBillingCustomerTypeFields);
-			mediacatToggleBillingCustomerTypeFields();
-		});
-		</script>
-		<?php
 	}
 
 	/**
@@ -396,8 +363,8 @@ final class Sozlesme_Yonetimi {
 	private function get_billing_customer_type_rows( $order ) {
 		$customer_type = $order->get_meta( '_billing_customer_type', true );
 		$labels        = array(
-			'bireysel' => __( 'Bireysel', 'sozlesme-yonetimi-for-woocommerce' ),
-			'kurumsal' => __( 'Kurumsal', 'sozlesme-yonetimi-for-woocommerce' ),
+			'bireysel' => __( 'Bireysel', 'order-checkout-page-agreement' ),
+			'kurumsal' => __( 'Kurumsal', 'order-checkout-page-agreement' ),
 		);
 
 		$rows = array();
@@ -406,14 +373,14 @@ final class Sozlesme_Yonetimi {
 			return $rows;
 		}
 
-		$rows[ __( 'Fatura Tipi', 'sozlesme-yonetimi-for-woocommerce' ) ] = isset( $labels[ $customer_type ] ) ? $labels[ $customer_type ] : $customer_type;
+		$rows[ __( 'Fatura Tipi', 'order-checkout-page-agreement' ) ] = isset( $labels[ $customer_type ] ) ? $labels[ $customer_type ] : $customer_type;
 
 		if ( 'kurumsal' === $customer_type ) {
-			$rows[ __( 'Şirket Unvanı', 'sozlesme-yonetimi-for-woocommerce' ) ] = $order->get_meta( '_billing_company', true );
-			$rows[ __( 'Vergi Dairesi', 'sozlesme-yonetimi-for-woocommerce' ) ] = $order->get_meta( '_billing_tax_office', true );
-			$rows[ __( 'Vergi Numarası', 'sozlesme-yonetimi-for-woocommerce' ) ] = $order->get_meta( '_billing_tax_number', true );
+			$rows[ __( 'Şirket Unvanı', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_company', true );
+			$rows[ __( 'Vergi Dairesi', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_tax_office', true );
+			$rows[ __( 'Vergi Numarası', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_tax_number', true );
 		} else {
-			$rows[ __( 'T.C. Kimlik No', 'sozlesme-yonetimi-for-woocommerce' ) ] = $order->get_meta( '_billing_tc_no', true );
+			$rows[ __( 'T.C. Kimlik No', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_tc_no', true );
 		}
 
 		return $rows;
@@ -433,7 +400,7 @@ final class Sozlesme_Yonetimi {
 		}
 
 		if ( $plain_text ) {
-			echo esc_html__( 'Fatura Bilgileri', 'sozlesme-yonetimi-for-woocommerce' ) . "\n";
+			echo esc_html__( 'Fatura Bilgileri', 'order-checkout-page-agreement' ) . "\n";
 			foreach ( $rows as $label => $value ) {
 				echo esc_html( $label ) . ': ' . esc_html( $value ) . "\n";
 			}
@@ -441,7 +408,7 @@ final class Sozlesme_Yonetimi {
 			return;
 		}
 
-		echo '<h2>' . esc_html__( 'Fatura Bilgileri', 'sozlesme-yonetimi-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Fatura Bilgileri', 'order-checkout-page-agreement' ) . '</h2>';
 		echo '<ul style="margin-bottom:20px;">';
 		foreach ( $rows as $label => $value ) {
 			echo '<li>' . esc_html( $label ) . ': ' . esc_html( $value ) . '</li>';
@@ -700,6 +667,10 @@ final class Sozlesme_Yonetimi {
 		}
 		wp_enqueue_style( 'sozlesme-wce-checkout', plugins_url( 'assets/checkout.css', __FILE__ ), array(), '1.0.0' );
 		wp_enqueue_script( 'sozlesme-wce-checkout', plugins_url( 'assets/checkout.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+
+		if ( self::fatura_tipi_aktif() ) {
+			wp_enqueue_script( 'sozlesme-wce-customer-type-toggle', plugins_url( 'assets/customer-type-toggle.js', __FILE__ ), array( 'jquery' ), '1.0.0', true );
+		}
 	}
 
 	public function render_checkout_agreements() {

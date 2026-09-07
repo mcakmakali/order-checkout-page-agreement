@@ -1,11 +1,11 @@
-=== Sözleşme Yönetimi ===
-Contributors: mcakmakali
+=== Order Checkout Page Agreement (Sipariş Ödeme Sayfası Sözleşme Onayı) ===
+Contributors: mehmetalicakmak
 Donate link: https://mehmetalicakmak.me
 Tags: woocommerce, checkout, contract, agreement, pdf
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -14,7 +14,7 @@ Adds contracts (distance selling agreement, pre-information form, privacy notice
 
 == Description ==
 
-**Sözleşme Yönetimi** (Turkish for "Agreement Management") lets you add one or more agreements to the WooCommerce checkout page that customers accept with a checkbox before placing an order.
+**Order Checkout Page Agreement** lets you add one or more agreements to the WooCommerce checkout page that customers accept with a checkbox before placing an order.
 
 = Features =
 
@@ -34,7 +34,7 @@ Adds contracts (distance selling agreement, pre-information form, privacy notice
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/sozlesme-yonetimi-for-woocommerce` directory, or install the plugin through the WordPress "Add Plugin" screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/order-checkout-page-agreement` directory, or install the plugin through the WordPress "Add Plugin" screen directly.
 2. Activate the plugin through the "Plugins" screen in WordPress.
 3. Go to WooCommerce → Sözleşmeler to add agreements, and WooCommerce → Sözleşme Ayarları to toggle the optional Customer Type fields.
 
@@ -59,6 +59,14 @@ No, agreements are only shown on checkout and in the admin screen; they cannot b
 3. The admin screen for adding an agreement, with merge tag buttons.
 
 == Changelog ==
+
+= 1.0.3 =
+* Removed "WooCommerce" from the plugin name/slug entirely, per WordPress.org's naming policy.
+
+= 1.0.2 =
+* Renamed the plugin (display name and slug) to a more distinctive, non-generic name.
+* Moved an inline `<script>` block to a properly enqueued script file (`wp_enqueue_script`).
+* Fixed the readme.txt Contributors field.
 
 = 1.0.1 =
 * Renamed plugin slug/text domain to comply with the WordPress.org trademark naming rules.
