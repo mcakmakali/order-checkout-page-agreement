@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name: Order Checkout Page Agreement (Sipariş Ödeme Sayfası Sözleşme Onayı)
+ * Plugin Name: MehmetAliCakmak Checkout Agreements (Ödeme Sayfası Sözleşme Onayı)
  * Plugin URI: https://github.com/mcakmakali/wordpress-woocommerce-sozlesme
  * Description: WooCommerce ödeme sayfasında onaylanması gereken/opsiyonel sözleşmeler eklemenizi sağlar.
- * Version: 1.0.3
+ * Version: 1.0.5
  * Author: Mehmet Ali Çakmak
  * Author URI: https://mehmetalicakmak.me
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: order-checkout-page-agreement
+ * Text Domain: mehmetalicakmak-checkout-agreements
  * Requires Plugins: woocommerce
  */
 
@@ -259,10 +259,10 @@ final class Sozlesme_Yonetimi {
 	public function add_billing_customer_type_fields( $fields ) {
 		$fields['billing']['billing_customer_type'] = array(
 			'type'     => 'radio',
-			'label'    => __( 'Fatura Tipi', 'order-checkout-page-agreement' ),
+			'label'    => __( 'Fatura Tipi', 'mehmetalicakmak-checkout-agreements' ),
 			'options'  => array(
-				'bireysel' => __( 'Bireysel', 'order-checkout-page-agreement' ),
-				'kurumsal' => __( 'Kurumsal', 'order-checkout-page-agreement' ),
+				'bireysel' => __( 'Bireysel', 'mehmetalicakmak-checkout-agreements' ),
+				'kurumsal' => __( 'Kurumsal', 'mehmetalicakmak-checkout-agreements' ),
 			),
 			'default'  => 'bireysel',
 			'required' => true,
@@ -272,8 +272,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_company'] = array(
-			'label'       => __( 'Şirket Unvanı', 'order-checkout-page-agreement' ),
-			'placeholder' => _x( 'Şirket Unvanı', 'placeholder', 'order-checkout-page-agreement' ),
+			'label'       => __( 'Şirket Unvanı', 'mehmetalicakmak-checkout-agreements' ),
+			'placeholder' => _x( 'Şirket Unvanı', 'placeholder', 'mehmetalicakmak-checkout-agreements' ),
 			'required'    => true,
 			'class'       => array( 'form-row-wide', 'billing-corporate-field' ),
 			'clear'       => true,
@@ -281,8 +281,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_tax_office'] = array(
-			'label'       => __( 'Vergi Dairesi', 'order-checkout-page-agreement' ),
-			'placeholder' => _x( 'Vergi Dairesi', 'placeholder', 'order-checkout-page-agreement' ),
+			'label'       => __( 'Vergi Dairesi', 'mehmetalicakmak-checkout-agreements' ),
+			'placeholder' => _x( 'Vergi Dairesi', 'placeholder', 'mehmetalicakmak-checkout-agreements' ),
 			'required'    => true,
 			'class'       => array( 'form-row-first', 'billing-corporate-field' ),
 			'clear'       => false,
@@ -290,8 +290,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_tax_number'] = array(
-			'label'       => __( 'Vergi Numarası', 'order-checkout-page-agreement' ),
-			'placeholder' => _x( 'Vergi Numarası', 'placeholder', 'order-checkout-page-agreement' ),
+			'label'       => __( 'Vergi Numarası', 'mehmetalicakmak-checkout-agreements' ),
+			'placeholder' => _x( 'Vergi Numarası', 'placeholder', 'mehmetalicakmak-checkout-agreements' ),
 			'required'    => true,
 			'class'       => array( 'form-row-last', 'billing-corporate-field' ),
 			'clear'       => true,
@@ -300,8 +300,8 @@ final class Sozlesme_Yonetimi {
 		);
 
 		$fields['billing']['billing_tc_no'] = array(
-			'label'       => __( 'T.C. Kimlik No', 'order-checkout-page-agreement' ),
-			'placeholder' => _x( 'T.C. Kimlik No', 'placeholder', 'order-checkout-page-agreement' ),
+			'label'       => __( 'T.C. Kimlik No', 'mehmetalicakmak-checkout-agreements' ),
+			'placeholder' => _x( 'T.C. Kimlik No', 'placeholder', 'mehmetalicakmak-checkout-agreements' ),
 			'required'    => true,
 			'class'       => array( 'form-row-wide', 'billing-individual-field' ),
 			'clear'       => true,
@@ -337,7 +337,7 @@ final class Sozlesme_Yonetimi {
 		$customer_type = isset( $_POST['billing_customer_type'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_customer_type'] ) ) : '';
 
 		if ( $customer_type && ! in_array( $customer_type, array( 'bireysel', 'kurumsal' ), true ) ) {
-			$errors->add( 'validation', __( 'Lütfen fatura tipini (Bireysel/Kurumsal) seçiniz.', 'order-checkout-page-agreement' ) );
+			$errors->add( 'validation', __( 'Lütfen fatura tipini (Bireysel/Kurumsal) seçiniz.', 'mehmetalicakmak-checkout-agreements' ) );
 			return;
 		}
 
@@ -345,13 +345,13 @@ final class Sozlesme_Yonetimi {
 			$tc_no = isset( $_POST['billing_tc_no'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_tc_no'] ) ) : '';
 
 			if ( $tc_no && ! preg_match( '/^[1-9][0-9]{10}$/', $tc_no ) ) {
-				$errors->add( 'validation', __( 'T.C. Kimlik Numarası 11 haneli ve rakamlardan oluşmalıdır.', 'order-checkout-page-agreement' ) );
+				$errors->add( 'validation', __( 'T.C. Kimlik Numarası 11 haneli ve rakamlardan oluşmalıdır.', 'mehmetalicakmak-checkout-agreements' ) );
 			}
 		} elseif ( 'kurumsal' === $customer_type ) {
 			$tax_number = isset( $_POST['billing_tax_number'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_tax_number'] ) ) : '';
 
 			if ( $tax_number && ! preg_match( '/^[0-9]{10}$/', $tax_number ) ) {
-				$errors->add( 'validation', __( 'Vergi Numarası 10 haneli ve rakamlardan oluşmalıdır.', 'order-checkout-page-agreement' ) );
+				$errors->add( 'validation', __( 'Vergi Numarası 10 haneli ve rakamlardan oluşmalıdır.', 'mehmetalicakmak-checkout-agreements' ) );
 			}
 		}
 	}
@@ -363,8 +363,8 @@ final class Sozlesme_Yonetimi {
 	private function get_billing_customer_type_rows( $order ) {
 		$customer_type = $order->get_meta( '_billing_customer_type', true );
 		$labels        = array(
-			'bireysel' => __( 'Bireysel', 'order-checkout-page-agreement' ),
-			'kurumsal' => __( 'Kurumsal', 'order-checkout-page-agreement' ),
+			'bireysel' => __( 'Bireysel', 'mehmetalicakmak-checkout-agreements' ),
+			'kurumsal' => __( 'Kurumsal', 'mehmetalicakmak-checkout-agreements' ),
 		);
 
 		$rows = array();
@@ -373,14 +373,14 @@ final class Sozlesme_Yonetimi {
 			return $rows;
 		}
 
-		$rows[ __( 'Fatura Tipi', 'order-checkout-page-agreement' ) ] = isset( $labels[ $customer_type ] ) ? $labels[ $customer_type ] : $customer_type;
+		$rows[ __( 'Fatura Tipi', 'mehmetalicakmak-checkout-agreements' ) ] = isset( $labels[ $customer_type ] ) ? $labels[ $customer_type ] : $customer_type;
 
 		if ( 'kurumsal' === $customer_type ) {
-			$rows[ __( 'Şirket Unvanı', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_company', true );
-			$rows[ __( 'Vergi Dairesi', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_tax_office', true );
-			$rows[ __( 'Vergi Numarası', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_tax_number', true );
+			$rows[ __( 'Şirket Unvanı', 'mehmetalicakmak-checkout-agreements' ) ] = $order->get_meta( '_billing_company', true );
+			$rows[ __( 'Vergi Dairesi', 'mehmetalicakmak-checkout-agreements' ) ] = $order->get_meta( '_billing_tax_office', true );
+			$rows[ __( 'Vergi Numarası', 'mehmetalicakmak-checkout-agreements' ) ] = $order->get_meta( '_billing_tax_number', true );
 		} else {
-			$rows[ __( 'T.C. Kimlik No', 'order-checkout-page-agreement' ) ] = $order->get_meta( '_billing_tc_no', true );
+			$rows[ __( 'T.C. Kimlik No', 'mehmetalicakmak-checkout-agreements' ) ] = $order->get_meta( '_billing_tc_no', true );
 		}
 
 		return $rows;
@@ -400,7 +400,7 @@ final class Sozlesme_Yonetimi {
 		}
 
 		if ( $plain_text ) {
-			echo esc_html__( 'Fatura Bilgileri', 'order-checkout-page-agreement' ) . "\n";
+			echo esc_html__( 'Fatura Bilgileri', 'mehmetalicakmak-checkout-agreements' ) . "\n";
 			foreach ( $rows as $label => $value ) {
 				echo esc_html( $label ) . ': ' . esc_html( $value ) . "\n";
 			}
@@ -408,7 +408,7 @@ final class Sozlesme_Yonetimi {
 			return;
 		}
 
-		echo '<h2>' . esc_html__( 'Fatura Bilgileri', 'order-checkout-page-agreement' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Fatura Bilgileri', 'mehmetalicakmak-checkout-agreements' ) . '</h2>';
 		echo '<ul style="margin-bottom:20px;">';
 		foreach ( $rows as $label => $value ) {
 			echo '<li>' . esc_html( $label ) . ': ' . esc_html( $value ) . '</li>';

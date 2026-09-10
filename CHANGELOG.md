@@ -3,6 +3,16 @@
 Bu projedeki tüm önemli değişiklikler bu dosyada listelenir.
 Format [Keep a Changelog](https://keepachangelog.com/) temel alınmıştır; sürümleme [Semantic Versioning](https://semver.org/) kurallarına uyar.
 
+## [1.0.5] - 2026-09-10
+
+### Changed
+- WordPress.org, "Pergamon" markasını da üçüncü taraflara ait ve kullanıcıyla ilişkisi doğrulanamayan bir isim olarak reddetti; eklenti reviewer'ın önerdiği şekilde "MehmetAliCakmak Checkout Agreements" olarak yeniden adlandırıldı: slug `mehmetalicakmak-checkout-agreements`.
+
+## [1.0.4] - 2026-09-09
+
+### Changed
+- İnceleme geri bildirimi üzerine eklenti "Pergamon Checkout Agreements" olarak yeniden adlandırıldı (isim başında ayırt edici bir marka terimi kullanılıyor): slug `pergamon-checkout-agreements`.
+
 ## [1.0.3] - 2026-09-07
 
 ### Changed
